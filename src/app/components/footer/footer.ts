@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import {DatePipe} from '@angular/common';
+import {TranslatePipe} from '@ngx-translate/core';
+import {OpenDialog} from '../../shared/open-dialog/open-dialog';
 
 @Component({
   selector: 'app-footer',
@@ -8,6 +10,16 @@ import {DatePipe} from '@angular/common';
   styleUrl: './footer.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Footer {
+export class Footer implements OnInit{
+  year: Date | undefined;
 
+  private readonly openDialog = inject(OpenDialog);
+
+  ngOnInit(): void {
+    this.year = new Date();
+  }
+
+  onClickOpenDevInfoDialog(): void{
+    this.openDialog.openDevelopers();
+  }
 }

@@ -1,118 +1,149 @@
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {Header} from './components/header/header';
-import {Footer} from './components/footer/footer';
+import {TranslateService} from '@ngx-translate/core';
+import {DEFAULT_LANGUAGE, LANGUAGE_LIST} from './shared/translate/translate-languages';
+import {ThemeService} from './shared/theme/theme.service';
+import {Theme} from './shared/theme/theme.enum';
+import {ToShowSpinner} from './shared/spinner/directive/to-show-spinner.directive';
+import {Spinner} from './shared/spinner/spinner/spinner';
+import {Toast} from './shared/toast/component/toast';
+import {ToShowToast} from './shared/toast/directive/to-show-toast.directive';
+import {Auth} from './shared/auth/service/auth';
+import {Role, User, UserRoleAuthEnum} from './shared/auth/auth-config';
+import {LS} from './shared/local-storage/config/local-storage.constants';
+import {Event} from './shared/event/event';
+import {LocalStorage} from './shared/local-storage/service/local-storage';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer],
+  imports: [RouterOutlet, ToShowSpinner, Spinner, Toast, ToShowToast,],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class App {
+export class App implements OnInit{
+  userLocalStorageName: string = '';
+  user: User | undefined ;
+  userRoleList: Role[] = [];
 
-  // ToDo БАЗОВЫЙ КОНСТРУКТОР ПРОЕКТОВ НА ANGULAR
-  //  * Библиотеки базовые:
-  //    - @ng-bootstrap/ng-bootstrap
-  //    - bootstrap
-  //    - bootstrap-icons
-  //    - @ngx-translate/core
-  //    - ngx-translate-http-loader
-  //  * Environment:
-  //    - environment / environment.testbazis-auth / environment/testbazis / environment/bazis2-auth / environment/bazis2
-  //    - Скрипты в package.json под билды env. (npm run {script})
-  //    - Конфигурации билдов в angular.json для сборки под разные env.
-  //  * SSL:
-  //    - .cer, .key у bazis / localhost / testbazis
-  //  * Компоненты базовые:
-  //    - Компонент Header -> юзер/роли, ddm меню
-  //    ! - Компонент Main   -> через RouterOutlet ->
-  //        -- Routing базовый ''[guard], 'access-denied', '**'
-  //    - Компонент Footer
-  //    - Компонент AccessDenied (по структуре находится в shared/auth)
-  //  * DATA API ===> Model/DTO/CRUD/Search-implements Services:
-  //    ! - Реализация ООП API моделей
-  //        -- IBase(DTO/Search/...)        -> Интерфейс пустой, для типизации в методах, чтобы понять какой тип модели используется
-  //        -- ABase(DTO/Search/...)        -> Абстрактный класс с свойствами повторяющимися в дочерних классах
-  //        -- impl./(name)(DTO/Search/...) -> Класс расширяется от ABase(DTO/Search/...), создает свои свойства
-  //    ! - Реализация ООП API сервисов
-  //        -- ABase                        -> Класс базовый для хранения baseUrl, (httpClient в ед. виде)   p.s. Расширяется в A(crud/search/...)
-  //        -- I(crud/search/...)           -> Интерфейс каркаса методов для сервисов   p.s. Реализуется в A(crud/search/...)
-  //        -- A(crud/search/...)           -> Абстрактный класс с методами реализующий interface I(...), расширяемый ABase.
-  //        -- (CRUD/Search/...)Service     -> Сервис расширяемый от A(crud/search/...) но передающий в его super конструктор токен для url
-  //        -- implements./(name)Service    -> Сервис реализующий все interface I(...), инжектит (CRUD/Search/etc..)Service и создает методы на их основе вызывая в них методы сервисов
-  //  * Стили/Темы:
-  //    - Константы Scss/ Тема Scss
-  //    - Theme Service
-  //    - Style.scss переопределения
-  //  * Авторизация:
-  //    - AuthService
-  //    - Guard
-  //    - Interceptor (withCredentials)
-  //    - Page 403
-  //    - Выдача ролей в main / next в EventService
-  //  * LocalStorage:
-  //    - Event Service
-  //    - В Main.ts (в Smart компоненте) инициализация/присвоение значений из/в LocalStorage
-  //  * Shared:
-  //    - EventService => RxJs Observables
-  //    - ...Остальные сервисы/ Работы с сущностями/ data и тд.
-  //  * Модальные окна:
-  //    - Компоненты диалогов:
-  //      -- Developers  -> Инфо о разработчиках/Отделе
-  //      -- Information -> Информационное окно с принятием решения
-  //      -- Settings    -> Настройки сущностей
-  //    - OpenDialog Service
-  //  * Спиннер:
-  //    - Interceptor счетчик запросов
-  //    - Event Service
-  //    - Директива спиннера [appToShowSpinner]
-  //    - Компонент спиннера
-  //  * Всплывающие уведомления:
-  //    - Компонент Toast
-  //    - Service Toast
-  //  * i18n:
-  //    - Библиотеки: @ngx-translate/core, ngx-translate-http-loader (не multi, т.к. используем 1 файл).
-  //    - ./18n/ru.json
-  //    - ./shared/httpLoaferFactory() функция
-  //    - провайдинг в app.config()
-  //  * Важные внесения изменений:
-  //    - В angular.json:
-  //      | ..schematics: @schematics/angular:component: "changeDetection": "OnPush".. |
-  //      | ..assets: "input": "public","output": "public" |
-  //      | в configurations у budgets если превышает норму budgets: maximumWarning, maximumError увеличить в размерах хранилище |
-  //      | Прописать в configurations разные конфиги сборок под environments |
-  //      | В serve: options: ssl: true, sslCert и sslKey пути до SSL
-  //    - В package.json:
-  //      Написать скрипты scripts:
-  //       "build": "ng build --configuration bazis2 --base-href=/APP-NAME/",
-  //       "build-auth": "ng build --configuration bazis2-auth --base-href=/APP-NAME/",
-  //       "build-test": "ng build --configuration testbazis --base-href=/APP-NAME/",
-  //       "build-test-auth": "ng build --configuration testbazis-auth --base-href=/APP-NAME/",
-  //       "t-update": "ngx-translate-extract --input ./src --output public/i18n/ru.json public/i18n/en.json --sort --format namespaced-json",
-  //      Запускать скрипты через: npm run {script name}
-  //  * Прочее:
-  //    - Изменить favicon.ico
-  //    - Изменить title в index.html под название ПО
-  //
-  //  * Структура примерная:
-  //?  ./src
-  //?    |-- public
-  //?    |   |-- files
-  //?    |   |-- i18n
-  //?    |   |-- images
-  //?    |   |-- scss
-  //?    |   `-- ssl
-  //?    |-- app
-  //?    |   |-- components
-  //?    |   |-- dialogs
-  //?    |   |-- pages
-  //?    |   `-- shared
-  //?    |         |-- data
-  //?    |         |   |-- model
-  //?    |         |   |-- service
-  //?    |         |   `-- url
-  //?    `-- environments
+  readonly translate = inject(TranslateService);
+  readonly theme = inject(ThemeService);
+  readonly event = inject(Event);
+  readonly auth = inject(Auth);
+  readonly ls = inject(LocalStorage);
 
+
+  ngOnInit() {
+    this.initTranslate();
+    this.initUserAndLocalStorage();
+  }
+
+  initTranslate(): void {
+    this.translate.addLangs(LANGUAGE_LIST);
+    this.translate.setDefaultLang(DEFAULT_LANGUAGE);
+    this.translate.use(DEFAULT_LANGUAGE);
+  }
+
+  initUserAndLocalStorage(): void{
+    this.auth.getUserFromServer().subscribe({
+      next: (user: User): void => {
+        this.user = user;
+
+        this.userLocalStorageName = LS.APP + ':' + this.user.id +
+          this.user.firstName.toLowerCase() + this.user.lastName.toLowerCase();
+
+        this.event.setCurrentUser(this.user);
+        this.defineUserRoleList();
+
+        this._changeRole();
+        this._changeTheme();
+        this._changeVersion();
+        this._logout();
+
+        this.initLocalStorageValues();
+      }
+    })
+  }
+
+  defineUserRoleList(): void {
+    if (this.userRoleList.length === 0){
+      Object.values(UserRoleAuthEnum).forEach(value => {
+        if (this.user){
+          this.user.roleSet.forEach(role => {
+            if (value === role.name)
+              this.userRoleList.push(role);
+          });
+        }
+      });
+      this.event.setRoleList(this.userRoleList);
+    }
+  }
+
+  initLocalStorageValues(): void {
+    let userLSValuesParse = JSON.parse(this.ls.getLS(this.userLocalStorageName));
+    if (!userLSValuesParse) userLSValuesParse = {};
+
+    // Инициализация роли пользователя
+    const roleLS = userLSValuesParse[LS.APP_ROLE];
+    let roleUser = null;
+    if (roleLS) roleUser = this.userRoleList.find(role => {
+      return role.name === roleLS
+    });
+    const role = roleUser ? roleUser : this.userRoleList[0];
+    this.event.setRole(role);
+
+    // Инициализация темы ПО
+    let themeLocalStorage = userLSValuesParse[LS.APP_THEME]
+    const theme = themeLocalStorage ? themeLocalStorage : Theme.LIGHT;
+    this.event.setAppTheme(theme);
+
+    // Инициализация версии приложения (для отображения колокольчика уведомлений)
+    const versionLocalStorage = userLSValuesParse[LS.APP_VERSION];
+    const version = versionLocalStorage ? versionLocalStorage : 'v.0.0.0';
+    this.event.setAppVersion(version);
+
+  }
+
+  // Подписка на смену роли
+  _changeRole(): void{
+    this.event.getRole()
+      .subscribe({
+        next: role => {
+          if (role)
+            this.ls.addValueLS(this.userLocalStorageName, LS.APP_ROLE, role.name);
+        }
+      })
+  };
+
+  // Подписка на смену темы
+  _changeTheme(): void{
+    this.event.getAppTheme()
+      .subscribe({
+        next: (theme: Theme | null): void => {
+          if (theme) {
+            this.ls.addValueLS(this.userLocalStorageName,LS.APP_THEME, theme);
+            this.theme.changeTheme(theme);
+          }
+        }
+      })
+  };
+
+  // Подписка на смену версии ПО
+  _changeVersion(): void{
+    this.event.getAppVersion()
+      .subscribe({
+        next: (version: string): void => {
+          if (version)
+            this.ls.addValueLS(this.userLocalStorageName, LS.APP_VERSION, version);
+        }
+      })
+  };
+
+  // Подписка на выход из приложения
+  _logout(): void {
+    this.event.getLogoutUser()
+      .subscribe(changeUser => {
+        if (changeUser) this.auth.logout();
+      });
+  }
 }
