@@ -4,7 +4,7 @@
 //                       V
 
 export enum LS{
-  APP = 'cncparchive',
+  APP = 'APP_NAME',
   APP_VERSION = 'version',
   APP_THEME = 'theme',
   APP_ROLE = 'role'
