@@ -12,19 +12,19 @@ export class LocalStorage {
   // Получение значения LS
   getLS(nameLS: string): any {
     const valueLS = localStorage.getItem(encodeURI(nameLS));
-    if (valueLS) return decodeURI(valueLS)
+    if (valueLS) return JSON.parse(decodeURI(valueLS))
     else return null;
   }
 
   // Добавление значения в LS
   addValueLS(nameLS: string, nameFieldLS: string, valueFieldLS: any): void {
     const valueLS = this.getLS(nameLS);
-    let valueLSParse = valueLS ? JSON.parse(valueLS) : {};
+    let valueLSParse = valueLS ? valueLS : {};
     valueLSParse[nameFieldLS] = valueFieldLS;
     this.setLS(nameLS, valueLSParse);
   }
 
-  // Удаление всего LS ПО
+  // Удаление всего LS этого ПО у пользователя
   deleteLS(nameLS: string): void {
     localStorage.removeItem(encodeURI(nameLS));
   }

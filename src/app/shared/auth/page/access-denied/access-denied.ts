@@ -10,7 +10,8 @@ import {RouterLink} from '@angular/router';
   ],
   templateUrl: './access-denied.html',
   styleUrl: './access-denied.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {class: 'main-secondary-bg'}
 })
 export class AccessDenied {
 

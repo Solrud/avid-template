@@ -1,4 +1,4 @@
-import {inject, Injectable, OnInit, signal} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
 import {Developers} from '../../dialogs/developers/developers';
 import {DialogMode} from './dialog';
@@ -10,7 +10,7 @@ import {News} from '../../dialogs/news/news';
   providedIn: 'root'
 })
 export class OpenDialog{
-  toCenteredModal = signal<boolean>(false);
+  toCenteredModal = false;
 
   private readonly modal = inject(NgbModal);
   private readonly configModal = inject(NgbModalConfig);
@@ -21,7 +21,7 @@ export class OpenDialog{
     this.configModal.scrollable = true;
     this.configModal.size = 'lg';
     this.configModal.animation = true;
-    this.configModal.centered = this.toCenteredModal()
+    this.configModal.centered = this.toCenteredModal;
   }
 
   // Модальное окно информации о разработчиках

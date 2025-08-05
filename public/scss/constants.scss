@@ -8,9 +8,8 @@ $ng-valid-border-color: #26de85;         // цвет границы валидн
 
 // * Константы светлой темы
 $light-primary-color: #244cb6;
-//$light-primary-color: #a63e3e;
 $light-secondary-color: #4c6fcc;
-$light-third-color: #145a70;
+$light-third-color: #479cbb;
 
 $light-main-bg-color: #ececec;
 $light-font-color: #0c0c0c;
@@ -23,7 +22,7 @@ $light-white-soft-color: #ffffff;
 $light-black-soft-color: #1f1f1f;
 
 $light-main-bg: #ececec;
-$light-secondary-bg: #ffffff;
+$light-main-secondary-bg: #f3f3f3;
 $light-scrollbar-bg: #eeee;
 
 
@@ -34,7 +33,7 @@ $dark-third-color: #60ccf3;
 
 $dark-main-bg-color: #2a2d34;
 $dark-font-color: #f6f6f6;
-$dark-font-contrast-color: #fdfdfd;
+$dark-font-contrast-color: #000000;
 $dark-grey-color: #b6b6b6;
 
 $dark-white-color: #ffffff;
@@ -43,5 +42,5 @@ $dark-white-soft-color: #ffffff;
 $dark-black-soft-color: #1f1f1f;
 
 $dark-main-bg: #202428;
-$dark-secondary-bg: #0d0e10;
+$dark-main-secondary-bg: #15161a;
 $dark-scrollbar-bg: rgba(89, 89, 89, 0.93);

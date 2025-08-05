@@ -10,7 +10,7 @@
         <i class="bi bi-person-square white-permanent-color"></i>
         {{currentUser().firstName.toLowerCase()}} {{currentUser().lastName.toLowerCase()}}
       </span>
-      <div class="p-2 secondary-bg" ngbDropdownMenu>
+      <div class="p-2 main-secondary-bg" ngbDropdownMenu>
         <div class="mb-2 p-0 text-center ">
           <label class="pb-1 font-color" for="roleSelect">{{'HEADER.COMMON.CURRENT-ROLE' | translate}} :</label>
           <select class="form-select form-select-sm pointer text-capitalize main-bg font-color"
@@ -26,21 +26,29 @@
                 type="button"
                 ngbDropdownItem
                 (click)="onClickChangeUserOrLogout()">
-          <i class="bi bi-box-arrow-right "></i> {{'HEADER.BUTTON.CHANGE-USER' | translate}}</button>
+          <i class="bi bi-box-arrow-right"></i> {{'HEADER.BUTTON.CHANGE-USER' | translate}}</button>
       </div>
     </div>
     <div class="d-inline-block px-2"
          ngbDropdown>
       <i class="bi bi-gear fs-4 hover-header-config header-items-hover white-permanent-color"
          type="button"
-         ngbDropdownToggle></i>
-      <div class="secondary-bg"
+         ngbDropdownToggle>
+        @if (showNewsAttention()){
+          <ng-template [ngTemplateOutlet]="attentionBell"></ng-template>
+        }
+      </i>
+      <div class="main-secondary-bg"
            ngbDropdownMenu>
         <button class="btn mb-2 p-0 font-color"
                 type="button"
                 ngbDropdownItem
                 (click)="onClickOpenNewsDialog()">
-          <i class="bi bi-newspaper"></i> {{'HEADER.BUTTON.NEWS' | translate}}</button>
+          <i class="bi bi-newspaper">
+            @if (showNewsAttention()){
+              <ng-template [ngTemplateOutlet]="attentionBell"></ng-template>
+            }
+          </i> {{'HEADER.BUTTON.NEWS' | translate}}</button>
         <button class="btn mb-2 p-0 font-color"
                 type="button"
                 ngbDropdownItem
@@ -66,9 +74,9 @@
   </div>
 </header>
 
-<!--TODO прикрутить новости(колокольчик)-->
-<!--<ng-template #attentionBell>-->
-<!--  <img class="news-attention-config translate-middle p-2"-->
-<!--       [src]="'public/images/attention-fill.gif'" [alt]="'attention bell'"-->
-<!--       height="{{attentionLogoSize}}" width="{{attentionLogoSize}}">-->
-<!--</ng-template>-->
+
+<ng-template #attentionBell>
+  <img class="news-attention-config"
+       [src]="'../public/images/attention-fill.gif'" [alt]="'attention bell'"
+       height="16" width="16">
+</ng-template>

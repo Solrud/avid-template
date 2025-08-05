@@ -4,6 +4,7 @@ export enum DialogMode {
   DELETE,
   VIEW
 }
+
 export enum DialogResponse {
   ACCEPT,
   CONFIRM,

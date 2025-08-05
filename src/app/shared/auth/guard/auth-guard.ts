@@ -24,7 +24,7 @@ export const authGuard: CanActivateFn = (route, state) => {
         return userHasRequiredRole(result.roleSet, route.data['allowedRoles']);
       }
     })
-
+    // old - если не будет работать как выше
     // return userHasRequiredRole(authService.getUserFromServer().subscribe({
     //   next: result => result.roleSet, route.data['allowedRoles'])
     // });

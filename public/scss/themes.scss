@@ -8,7 +8,7 @@ $light-theme: (
   font-contrast: const.$light-font-contrast-color,
   scrollbar-bg: const.$light-scrollbar-bg,
   main-bg: const.$light-main-bg,
-  secondary-bg: const.$light-secondary-bg,
+  main-secondary-bg: const.$light-main-secondary-bg,
 );
 
 $dark-theme: (
@@ -19,7 +19,7 @@ $dark-theme: (
   font-contrast: const.$dark-font-contrast-color,
   scrollbar-bg: const.$dark-scrollbar-bg,
   main-bg: const.$dark-main-bg,
-  secondary-bg: const.$dark-secondary-bg,
+  main-secondary-bg: const.$dark-main-secondary-bg,
 );
 
 @mixin theme($theme){
@@ -30,7 +30,7 @@ $dark-theme: (
   $font-contrast-color: map-get($theme, font-contrast);
   $scrollbar-bg-color: map-get($theme, scrollbar-bg);
   $main-bg-color: map-get($theme, main-bg);
-  $secondary-bg-color: map-get($theme, secondary-bg);
+  $main-secondary-bg-color: map-get($theme, main-secondary-bg);
 
   $white-permanent-color: #f8f8f8;
   $black-permanent-color: #090909;
@@ -39,7 +39,7 @@ $dark-theme: (
   .primary-bg{
     background-color: $primary-color !important;
   }
-  .secondary-bg{
+  .main-secondary-bg{
     background-color: $secondary-color !important;
   }
   .third-bg{
@@ -48,8 +48,8 @@ $dark-theme: (
   .main-bg{
     background-color: $main-bg-color !important;
   }
-  .secondary-bg{
-    background-color: $secondary-bg-color !important;
+  .main-secondary-bg{
+    background-color: $main-secondary-bg-color !important;
   }
   .white-permanent-bg{
     background-color: $white-permanent-color !important;

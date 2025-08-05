@@ -9,8 +9,8 @@ import {AUTH_URL_TOKEN, LOGIN_URL_TOKEN} from '../url/auth.token';
 })
 export class Auth {
   isLoggedIn: boolean = false;
-  // текущий залогиненный пользователь, изначально стандартный
 
+  // текущий залогиненный пользователь, изначально стандартный
   private userFromServer$ = new BehaviorSubject<User>(USER_UNDEFINED);
   getUserFromServer(){
     return this.userFromServer$.asObservable();
@@ -18,7 +18,6 @@ export class Auth {
   setUserFromServer(user: User): void{
     this.userFromServer$.next(user);
   }
-
 
   private readonly httpClient =  inject(HttpClient);
   constructor(@Inject(AUTH_URL_TOKEN) private authUrl: string,
@@ -30,10 +29,12 @@ export class Auth {
   public autoLogin(): Observable<User> {
     return this.httpClient.post<User>(this.authUrl + '/auto', null);
   }
+
   //открыть страницу ввода логина в новой вкладке
   public openLoginBazis2(): void {
     window.open(this.loginUrl, 'Login Bazis 2');
   }
+
   //выход из приложения
   public logout(): void {
     this.setUserFromServer(USER_UNDEFINED); // сброс пользователя до стандартного

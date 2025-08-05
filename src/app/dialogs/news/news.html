@@ -8,8 +8,8 @@
     <span class="text-new-version-config fw-bold">{{currentAppVersion()}}</span>
   </h4>
   <span class="text-end px-3 black-to-white-color"> {{ "DIALOG.NEWS.LAST-VERSION" | translate }}:
-    <span [class.text-new-version-config]="userAppVersion() == currentAppVersion()"
-          [class.text-old-version-config]="userAppVersion() != currentAppVersion()">{{userAppVersion()}}</span>
+    <span [class.text-new-version-config]="!isFirstTimeOpened()"
+          [class.text-old-version-config]="isFirstTimeOpened()">{{userAppVersion()}}</span>
   </span>
   <div class="overflow-auto scrollbar-blue">
     @for(news of allNews(); track $index; let isFirst = $first) {

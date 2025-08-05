@@ -44,10 +44,10 @@ bootstrapApplication(App, appConfig)
 //    - Guard
 //    - Interceptor (withCredentials)
 //    - Page 403
-//    - Выдача ролей в main / next() в EventService
+//    - Выдача ролей в app.ts / next() в EventService
 //  * LocalStorage:
 //    - Event Service
-//    - В Main.ts (в Smart компоненте) инициализация/присвоение значений из/в LocalStorage
+//    - В app.ts (в Smart компоненте) инициализация/присвоение значений из/в LocalStorage
 //  * Shared:
 //    - EventService => RxJs Observables
 //    - ...Остальные сервисы/ Работы с сущностями/ data и тд.
@@ -67,6 +67,8 @@ bootstrapApplication(App, appConfig)
 //  * Всплывающие уведомления:
 //    - Компонент Toast
 //    - Service Toast
+//    - Config Toast
+//    - Директива Toast [appToShowToastComponent]
 //  * i18n:
 //    - Библиотеки: @ngx-translate/core, ngx-translate-http-loader (не multi).
 //    - ./18n/ru.json
@@ -87,7 +89,7 @@ bootstrapApplication(App, appConfig)
 //        ],
 //       "stylePreprocessorOptions": {
 //           "sass": {"silenceDeprecations": ["color-functions", "global-builtin", "import", "mixed-decls"]}
-//         } Чтобы не было warning в консоли насчет scss |
+//         } Чтобы не было warning'ов в консоли насчет scss |
 //  ?  - В package.json:
 //      Написать скрипты scripts:
 //       "build": "ng build --configuration bazis2 --base-href=/APP-NAME/",
@@ -115,10 +117,8 @@ bootstrapApplication(App, appConfig)
 //    - Изменить title в index.html под название ПО
 //    - Стратегия ChangeDetection - OnPush
 //    - Использование всевозможно сигналов
-//    - немного по другому принимать подписки в .subscribe !!!!!!!!!!!!!!!!!!!
-//    - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//    - !!Все подписки помещать в массив и отписываться на хуке ngOnDestroy !!
-//    - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//    - немного по другому принимать подписки в .subscribe({next: () => {}})
+//    - Все подписки помещать в массив и отписываться на хуке ngOnDestroy
 //  *  В Будущем TO-DO:
 //    - | Изменится структура api-services, будет инкапсулированный api-service, который будет трансформировать приходящий ответ JSON,
 //    через class-transformer в экземпляр класса DTO, с переопределением, к примеру,
@@ -128,7 +128,7 @@ bootstrapApplication(App, appConfig)
 //    - | Сделать шаблон репозиторий-template в GitHub с файлами по-умолчанию, для упрощения разработки новых ПО на Angular,
 //    не забыть указать то ГДЕ поменять названия проекта при создании из темплейта нового репозитория |
 //
-//  * Структура примерная:
+//  * Структура (примерная):
 //?  ./src
 //?    |-- public
 //?    |   |-- files

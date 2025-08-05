@@ -45,6 +45,7 @@ export class App implements OnInit{
   }
 
   initUserAndLocalStorage(): void{
+    // Получение пользователя и дальнейшая работа с LS
     this.auth.getUserFromServer().subscribe({
       next: (user: User): void => {
         this.user = user;
@@ -66,6 +67,7 @@ export class App implements OnInit{
   }
 
   defineUserRoleList(): void {
+    // Определение ролей у пользователя этого ПО
     if (this.userRoleList.length === 0){
       Object.values(UserRoleAuthEnum).forEach(value => {
         if (this.user){
@@ -80,10 +82,11 @@ export class App implements OnInit{
   }
 
   initLocalStorageValues(): void {
-    let userLSValuesParse = JSON.parse(this.ls.getLS(this.userLocalStorageName));
+    // Парсинг значений из local storage
+    let userLSValuesParse = this.ls.getLS(this.userLocalStorageName);
     if (!userLSValuesParse) userLSValuesParse = {};
 
-    // Инициализация роли пользователя
+    //! Инициализация роли пользователя
     const roleLS = userLSValuesParse[LS.APP_ROLE];
     let roleUser = null;
     if (roleLS) roleUser = this.userRoleList.find(role => {
@@ -92,16 +95,15 @@ export class App implements OnInit{
     const role = roleUser ? roleUser : this.userRoleList[0];
     this.event.setRole(role);
 
-    // Инициализация темы ПО
+    //! Инициализация темы ПО
     let themeLocalStorage = userLSValuesParse[LS.APP_THEME]
     const theme = themeLocalStorage ? themeLocalStorage : Theme.LIGHT;
     this.event.setAppTheme(theme);
 
-    // Инициализация версии приложения (для отображения колокольчика уведомлений)
+    //! Инициализация версии приложения (для отображения колокольчика уведомлений)
     const versionLocalStorage = userLSValuesParse[LS.APP_VERSION];
     const version = versionLocalStorage ? versionLocalStorage : 'v.0.0.0';
     this.event.setAppVersion(version);
-
   }
 
   // Подписка на смену роли

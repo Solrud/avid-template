@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Event} from '../../shared/event/event';
-import {TheNews, DEFAULT_APP_VERSION} from './news.config';
+import {DEFAULT_APP_VERSION, TheNews} from './news.config';
 import {DatePipe} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
 

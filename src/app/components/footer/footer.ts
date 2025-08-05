@@ -11,12 +11,12 @@ import {OpenDialog} from '../../shared/open-dialog/open-dialog';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Footer implements OnInit{
-  year: Date | undefined;
+  date: Date | undefined;
 
   private readonly openDialog = inject(OpenDialog);
 
   ngOnInit(): void {
-    this.year = new Date();
+    this.date = new Date();
   }
 
   onClickOpenDevInfoDialog(): void{
