@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cncparchiveui": {
+    "app_name": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -145,10 +145,10 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "cncparchiveui:build:production"
+              "buildTarget": "app_name:build:production"
             },
             "development": {
-              "buildTarget": "cncparchiveui:build:development"
+              "buildTarget": "app_name:build:development"
             }
           },
           "defaultConfiguration": "development"

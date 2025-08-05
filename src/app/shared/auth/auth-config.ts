@@ -33,9 +33,9 @@ export class Role {
 //                                            V
 //enum с возможными ролями пользователя, для данного приложения
 export enum UserRoleAuthEnum {
-  ADMIN = 'CHCPARCHIVE_ADMIN',
-  USER = 'CHCPARCHIVE_USER',
-  VIEW = 'CHCPARCHIVE_VIEW'
+  ADMIN = 'APP_NAME_ADMIN',
+  USER = 'APP_NAME_USER',
+  VIEW = 'APP_NAME_VIEW'
 }
 
 //todo снизу изменить нейминг своего ПРОЕКТА -.
