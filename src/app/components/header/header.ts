@@ -35,7 +35,6 @@ export class Header implements OnInit, OnDestroy {
   defaultVersion = DEFAULT_APP_VERSION;
 
   private readonly event = inject(Event);
-  private readonly theme = inject(ThemeService);
   private readonly openDialog = inject(OpenDialog);
 
   protected readonly Theme = Theme;
@@ -46,6 +45,10 @@ export class Header implements OnInit, OnDestroy {
     this._getAppTheme();
     this._getRoleList();
     this._getVersion();
+  }
+
+  public get DEFAULT_APP_VERSION(){
+    return DEFAULT_APP_VERSION;
   }
 
   // Подписка на получение пользователя
