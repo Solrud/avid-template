@@ -4,7 +4,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {Theme} from '../../shared/theme/theme.enum';
 import {Role, ROLE_UNDEFINED, User, USER_UNDEFINED} from '../../shared/auth/auth-config';
 import {Subscription} from 'rxjs';
-import {Event} from '../../shared/event/event';
+import {Event} from '../../shared/rx-js/event/event';
 import {ThemeService} from '../../shared/theme/theme.service';
 import {OpenDialog} from '../../shared/open-dialog/open-dialog';
 import {DEFAULT_APP_VERSION} from '../../dialogs/news/news.config';

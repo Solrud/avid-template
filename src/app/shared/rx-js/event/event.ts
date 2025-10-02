@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import {BehaviorSubject, Subject} from 'rxjs';
-import {Role, ROLE_UNDEFINED, User, USER_UNDEFINED} from '../auth/auth-config';
-import {DEFAULT_THEME, Theme} from '../theme/theme.enum';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {Role, User, USER_UNDEFINED} from '../../auth/auth-config';
+import {Theme} from '../../theme/theme.enum';
 
 @Injectable({
   providedIn: 'root'

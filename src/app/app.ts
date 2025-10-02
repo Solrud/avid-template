@@ -11,7 +11,7 @@ import {ToShowToast} from './shared/toast/directive/to-show-toast.directive';
 import {Auth} from './shared/auth/service/auth';
 import {Role, User, UserRoleAuthEnum} from './shared/auth/auth-config';
 import {LS} from './shared/local-storage/config/local-storage.constants';
-import {Event} from './shared/event/event';
+import {Event} from './shared/rx-js/event/event';
 import {LocalStorage} from './shared/local-storage/service/local-storage';
 
 @Component({
